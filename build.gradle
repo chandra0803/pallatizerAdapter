@@ -1,0 +1,162 @@
+import se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask
+
+plugins {
+    id "org.springframework.boot" version "2.7.1"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "java"
+    id "se.bjurr.gitchangelog.git-changelog-gradle-plugin" version "1.77.3"
+    id "com.jfrog.artifactory" version "4.24.16"
+    id "org.gradle.maven-publish"
+    id "org.sonarqube" version "3.4.0.2513"
+    id "com.gorylenko.gradle-git-properties" version "2.4.1"
+}
+
+group = "com.kpi.mars"
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("${project.property("artifactory_contextUrl")}/${project.property("artifactory_resolve_repository")}")
+    }
+}
+
+configurations {
+    all {
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+    }
+}
+
+dependencies {
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.projectlombok:lombok"
+    compileOnly "org.projectlombok:lombok"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
+    implementation "org.springframework.boot:spring-boot-starter-integration"
+    implementation "org.springframework.boot:spring-boot-starter-log4j2"
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation "org.springframework.integration:spring-integration-http"
+    implementation group: "org.springframework.integration", name: "spring-integration-ip", version: "5.3.0.RELEASE"
+    implementation "com.fasterxml.jackson.core:jackson-annotations"
+    implementation "com.fasterxml.jackson.core:jackson-core"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
+    implementation "com.google.guava:guava:31.1-jre"
+    implementation "com.lmax:disruptor:3.4.4"
+    implementation "org.modelmapper:modelmapper:3.1.0"
+    implementation "org.springdoc:springdoc-openapi-ui:1.6.13"
+    implementation "com.github.ulisesbocchio:jasypt-spring-boot:3.0.4"
+    implementation("com.querydsl:querydsl-mongodb") {
+        exclude group: "org.mongodb", module: "mongo-java-driver"
+    }
+    implementation "com.querydsl:querydsl-apt:5.0.0"
+    implementation "org.springframework.cloud:spring-cloud-config-client"
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+    implementation 'de.codecentric:spring-boot-admin-starter-client'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // kpi
+    implementation "com.kpi.sol:sol-keycloak-lib:1.4.0:lib"
+    implementation "com.kpi.sol:sol-tcpip-lib:1.0.3:lib"
+    implementation "com.kpi.mars:mars-common-api:1.0.5:lib"
+    implementation "com.kpi.mars:mars-palletizer-api:1.2.2:lib"
+    implementation "com.kpi.roboticshub:rh-adapter-lib:1.32.0:lib"
+    implementation "com.kpi.roboticshub:rh-client-api:1.17.2:lib"
+    // test
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.0"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.integration:spring-integration-test"
+    testImplementation "org.springframework.cloud:spring-cloud-stream-test-support"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.9.0"
+    testImplementation "org.mockito:mockito-junit-jupiter:4.8.0"
+    testImplementation "org.awaitility:awaitility:4.2.0"
+}
+
+springBoot {
+    buildInfo()
+}
+
+ext {
+    set("springCloudVersion", "2021.0.3")
+    set("springBootAdminVersion", "2.4.1")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+    }
+}
+
+// default bootJar task
+tasks.named("bootJar") {
+    enabled = true
+}
+
+// rename -plain to -lib jar
+tasks.named("jar") {
+    archiveClassifier.set("lib")
+    enabled = true
+}
+
+// add test task
+tasks.named("test") {
+    useJUnitPlatform()
+}
+
+// add task to manage change log
+tasks.register("generateGitChangelog", GitChangelogTask) {
+    fromRepo = "$projectDir"
+    file = file("CHANGELOG.md")
+    templateContent = file('changelog.mustache').getText('UTF-8')
+    untaggedName = "${project.version}"
+    ignoreCommitsIfMessageMatches = ".*\\[skip ci\\].*"
+}
+
+// allows publication of maven artifacts by artifactory
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact(tasks.getByName("jar"))
+        }
+    }
+}
+
+// allows publication and resolution of artifacts to and from artifactory
+artifactory {
+    contextUrl = "${project.property("artifactory_contextUrl")}"
+    publish {
+        clientConfig.setIncludeEnvVars(true)
+        repository {
+            repoKey = "${project.property("artifactory_publish_repository")}"
+            username = "${project.property("artifactory_user")}"
+            password = "${project.property("artifactory_password")}"
+            maven = true
+        }
+        defaults {
+            publications("mavenJava")
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+    resolve {
+        repository {
+            repoKey = "${project.property("artifactory_publish_repository")}"
+            username = "${project.property("artifactory_user")}"
+            password = "${project.property("artifactory_password")}"
+            maven = true
+        }
+    }
+}

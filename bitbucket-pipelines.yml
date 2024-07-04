@@ -1,0 +1,44 @@
+image: gradle:jdk17
+clone:
+  # sonar scanner needs the full history to assign issues properly
+  depth: full
+definitions:
+  services:
+    mongo:
+      image: mongo
+  steps:
+    - step: &build
+        name: Build and Tag
+        services:
+          - mongo
+        caches:
+          - gradle
+        script:
+          - export SONAR_SCANNER_OPTS="-Xmx1024m"
+          # build with sonar
+          - bash ./gradlew build sonarqube -Partifactory_user=$ARTIFACTORY_USER -Partifactory_password=$ARTIFACTORY_PASSWORD
+    - step: &publish
+        name: Publish to Jfrog
+        services:
+          - mongo
+        caches:
+          - gradle
+        script:
+          - export SONAR_SCANNER_OPTS="-Xmx1024m"
+          # build with sonar
+          - bash ./gradlew artifactoryPublish -Partifactory_user=$ARTIFACTORY_USER -Partifactory_password=$ARTIFACTORY_PASSWORD
+pipelines:
+  pull-requests:
+    '**':
+      - step: *build
+  branches:
+    'develop':
+      - step: *build
+      - step: *publish
+    '**':
+      - step: *build
+
+
+
+
+
