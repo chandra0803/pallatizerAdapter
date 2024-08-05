@@ -1,0 +1,15 @@
+{
+  "messageType": "BuildComplete",
+  "messageNumber": 2041,
+  "requestNumber": 18,
+  "deviceId": "Palletizer 1",
+  "buildId": "B1",
+  "taskId": "1",
+  "status": "Success",
+  "container": {
+    "containerId": "C000001"
+  },
+  "destination": {
+    "locationId": "Pallet Build A"
+  }
+}

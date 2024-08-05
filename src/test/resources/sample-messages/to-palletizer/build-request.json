@@ -1,0 +1,23 @@
+{
+  "messageType": "BuildRequest",
+  "messageNumber": 18,
+  "deviceId": "Palletizer 1",
+  "buildId": "B1",
+  "taskId": "1",
+  "container": {
+    "containerId": "C000001",
+    "width": "400",
+    "height": "300",
+    "length": "600",
+    "weight": "20.5"
+  },
+  "source": {
+    "locationId": "Lane 1"
+  },
+  "destination": {
+    "locationId": "Build Location A",
+    "x": "400.00",
+    "y": "300.00",
+    "z": "600.00"
+  }
+}

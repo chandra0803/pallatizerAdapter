@@ -1,0 +1,22 @@
+{
+  "systemId": "PA",
+  "deviceType": "Palletizer",
+  "activityType": "Build",
+  "activityDetail": {
+    "activityId": "A5A3EB48-1E10-4829-80CB-3B181D5339AD",
+    "containers": [
+      {
+        "containerId": "C000001",
+        "location": {
+          "locationId": "Lane 1"
+        }
+      }
+    ],
+    "destination": {
+      "locationId": "Build Location A"
+    },
+    "timestamp": "2022-06-06T20:02:40.487Z",
+    "mode": "None",
+    "deviceId": "Palletizer 1"
+  }
+}

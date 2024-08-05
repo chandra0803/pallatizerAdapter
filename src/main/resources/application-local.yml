@@ -1,0 +1,50 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: marsMessageDb
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://localhost:9411
+    enabled: false
+  boot:
+    admin:
+      client:
+        url: http://localhost:53105
+server:
+  address: 0.0.0.0
+  port: 55030
+  compression.enabled: true
+  http2.enabled: true
+  error:
+    include-message: always
+logging:
+  config: classpath:log4j2-spring.yml
+  file.name: mars-palletizer-adapter.log
+palletizer-adapter:
+  device-type: "BryonPalletizer"
+  client-connections:
+    "[Palletizer 1]":
+      #      host: 192.168.110.130
+      #      port: 2200
+      host: localhost
+      port: 2001
+      reconnect-interval: 5S
+      receive-interval: 2500MS
+      send-interval: 30S
+  build-complete-success-statuses: Success, Complete
+  ContainerMap:
+    "[Container 1]": C0001
+    "[Container 2]": C0002
+    "[Container 3]": C0003
+rh-adapter:
+  system-id: PA
+  max-retry-attempts: 3
+  back-off-duration: 1S
+  location-map-type: YAML
+  location-map:
+    "[South Automated Pick]": 4001
+    "[North Automated Pick]": 3001

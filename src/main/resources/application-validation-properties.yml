@@ -1,0 +1,158 @@
+##########################################################################################
+## (c) Kuecker Pulse Integration, L.P. 2022 All Rights Reserved
+## No part of this copyrighted work may be reproduced, modified, or distributed
+## in any form or by any means without the prior written permission of Kuecker Pulse 
+## Integration, L.P.
+## $Id$
+##########################################################################################
+palletizer-validator:
+  build-request-validator-properties:
+    system-id:
+      required: true
+      allowed-values: PA
+    device-type:
+      maximum: 50
+      required: true
+      allowed-values: Palletizer,BryonPalletizer
+    activity-type:
+      maximum: 50
+      required: true
+      allowed-values: Build
+    activity-detail:
+      required: true
+    detail-properties:
+      activityId:
+        required: true
+      containers:
+        required: true
+      container-properties:
+        container-id:
+          maximum: 50
+          required: true
+        weight:
+          maximum-decimal-digits: 3
+        location:
+          required: true
+      location-properties:
+        location-id:
+          maximum: 50
+          required: true
+      destination:
+        required: true
+  build-complete-validator-properties:
+    system-id:
+      required: true
+      allowed-values: PA
+    device-type:
+      required: false
+    activity-type:
+      required: false
+    # todo: all of the properties below are invalid.
+    activity-detail:
+      required: true
+    detail-properties:
+      activityId:
+        required: true
+      containers:
+        required: true
+      container-properties:
+        container-id:
+          maximum: 50
+          required: true
+        location:
+          required: true
+      location-properties:
+        location-id:
+          maximum: 50
+          required: true
+      destination:
+        required: true
+  build-release-validator-properties:
+    system-id:
+      required: true
+      allowed-values: PA
+    device-type:
+      maximum: 50
+      required: true
+      allowed-values: Palletizer,BryonPalletizer
+    activity-type:
+      maximum: 50
+      required: true
+      allowed-values: BuildRelease
+    activity-detail:
+      required: true
+    detail-properties:
+      activityId:
+        required: true
+      containers:
+        required: true
+      container-properties:
+        container-id:
+          required: false
+        location:
+          required: true
+      location-properties:
+        location-id:
+          maximum: 50
+          required: true
+  build-release-complete-validator-properties:
+    system-id:
+      required: true
+      allowed-values: PA
+    device-type:
+      required: false
+    activity-type:
+      required: false
+    # todo: all of the properties below are invalid.
+    activity-detail:
+      required: true
+    detail-properties:
+      activityId:
+        required: true
+      containers:
+        required: true
+      container-properties:
+        container-id:
+          maximum: 50
+          required: false
+        location:
+          required: true
+      location-properties:
+        location-id:
+          maximum: 50
+          required: true
+      destination:
+        required: false
+  location-status-request-validator-properties:
+    system-id:
+      required: true
+      allowed-values: PA
+    device-id:
+      required: true
+    device-type:
+      required: true
+      allowed-values: BryonPalletizer
+    request-type:
+      required: true
+      allowed-values: LocationStatusRequest
+    location-id:
+      required: false
+  location-status-validator-properties:
+    system-id:
+      required: true
+      allowed-values: PA
+    device-type:
+      required: true
+      allowed-values: BryonPalletizer
+    # todo: some of the properties below are invalid.
+    request-type:
+      required: true
+      allowed-values: LocationStatus
+    location-id:
+      required: true
+    status:
+      required: true
+    container-id:
+      required: false
+    device-id:
+      required: false

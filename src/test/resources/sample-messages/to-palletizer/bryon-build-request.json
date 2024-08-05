@@ -1,0 +1,18 @@
+{
+  "messageType": "BuildRequest",
+  "messageNumber": 18,
+  "deviceId": "Byron Palletizer 1",
+  "buildId": "B1",
+  "taskId": "1",
+  "container": {
+    "containerId": "C000001",
+    "weight": "20.5"
+  },
+  "source": {
+    "locationId": "Pick Station 1"
+  },
+  "destination": {
+    "locationId": "Pallet Build A"
+  },
+  "placement": "Four-Corners"
+}

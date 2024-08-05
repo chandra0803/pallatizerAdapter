@@ -1,0 +1,10 @@
+{
+  "activityId": "A5A3EB48-1E10-4829-80CB-3B181D5339AD",
+  "activityState": "Completed",
+  "deviceId": "Palletizer 1",
+  "timestamp": "2022-06-06T20:02:40.487Z",
+  "location": {
+      "locationId": "Pallet Build A"
+    }
+
+}

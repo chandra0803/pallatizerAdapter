@@ -1,0 +1,12 @@
+{
+  "messageType":"LocationStatus",
+  "messageNumber":6040,
+  "location":{
+    "locationId":"Pallet Build A"
+  },
+  "status":"Occupied",
+  "deviceId": "Palletizer 1",
+  "container":{
+    "containerId":"C000001"
+  }
+}

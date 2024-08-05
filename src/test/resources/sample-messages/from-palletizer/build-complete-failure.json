@@ -1,0 +1,22 @@
+{
+  "messageType": "BuildComplete",
+  "messageNumber": 2080,
+  "requestNumber": 48,
+  "deviceId": "Palletizer 2",
+  "buildId": "B7",
+  "taskId": "1",
+  "status": "Failure",
+  "container": {
+    "containerId": "C000001",
+    "width": "400",
+    "height": "300",
+    "length": "600",
+    "weight": "10.5"
+  },
+  "destination": {
+    "locationId": "Build Location B",
+    "x": "400.00",
+    "y": "300.00",
+    "z": "600.00"
+  }
+}

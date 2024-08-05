@@ -1,0 +1,22 @@
+{
+  "systemId": "PA",
+  "deviceType": "Palletizer",
+  "activityType": "Build",
+  "activityDetail": {
+    "activityId": "A5A3EB48-1E10-4829-80CB-3B181D5339AD",
+    "containers": [
+      {
+        "containerId": "C000001",
+        "location": {
+          "locationId": "Pick Station 1"
+        }
+      }
+    ],
+    "destination": {
+      "locationId": "Pallet Build A"
+    },
+    "timestamp": "2022-06-06T20:02:40.487Z",
+    "mode": "None",
+    "deviceId": "Byron Palletizer 1"
+  }
+}

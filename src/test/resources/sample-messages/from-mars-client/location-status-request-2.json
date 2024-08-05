@@ -1,0 +1,8 @@
+{
+  "systemId": "PA",
+  "deviceType": "BryonPalletizer",
+  "requestType": "LocationStatusRequest",
+  "deviceId": "Palletizer 1",
+  "locationId": "Pallet Build A"
+
+}

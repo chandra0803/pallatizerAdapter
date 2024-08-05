@@ -1,0 +1,63 @@
+spring:
+  profiles:
+    include: validation-properties, conversion-properties
+  application:
+    name: mars-palletizer-adapter
+  cloud:
+    config:
+      enabled: false
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: palletizerAdapterTestDB
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.StdDateFormat
+    default-property-inclusion: NON_EMPTY
+    serialization:
+      write-date-keys-as-timestamps: false
+      write-dates-as-timestamps: false
+    time-zone: UTC
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          public-key-location: classpath:keycloak_dev.pub
+server:
+  address: 0.0.0.0
+  port: 55030
+  compression.enabled: true
+  http2.enabled: true
+  error:
+    include-message: always
+management:
+  endpoints.web.exposure.include: "*"
+  endpoint.health.show-details: always
+logging:
+  config: classpath:log4j2-spring.yml
+  file.name: mars-palletizer-adapter.log
+palletizer-adapter:
+  device-type: "BryonPalletizer"
+  client-connections:
+    "[Palletizer 1]":
+      host: localhost
+      port: 2001
+      reconnect-interval: 5S
+      receive-interval: 2500MS
+      send-interval: 30S
+  build-complete-success-statuses: Success, Complete
+rh-adapter:
+  system-id: PA
+  location-map-type: YAML
+  location-map:
+    "Build Location 1": "BL1"
+kpi:
+  sol:
+    security:
+      client-id: RoboticsHub
+      client-secret: K6NCknahmlz7PyaSN6Kogoy2HkKNOvWz
+      access-decision-map-type: MARS
+      validate-clientId: true
+      access-token-path: /protocol/openid-connect/token
+      allowed-origins: http://localhost:4200, https://rh-web-app.azurewebsites.net
+      issuerUri: http://20.22.77.254:8080/auth/realms/ControlTower
