@@ -1,0 +1,83 @@
+Configutation:
+  status: warn
+  name: Default
+  monitorInterval: 30
+  Properties:
+    property:
+      - name: log-path
+        value: "../logs"
+  Appenders:
+    Console:
+      name: Console_Appender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "%highlight{[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%X{traceId},%X{spanId}] [%-5level] [%5T] [%-25logger{1}]: %message%n}{FATAL=bright magenta, ERROR=bright red, WARN=bright yellow, INFO=bright blue, DEBUG=bright green, TRACE=bright cyan}"
+    RollingFile:
+      - name: RollingFile_Appender
+        fileName: ${log-path}/${sys:LOG_FILE}
+        filePattern: "${log-path}/${sys:LOG_FILE}.%d{yyyy-MM-dd}T%d{HH-mm-ss}.%i.log"
+        PatternLayout:
+          pattern: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%X{traceId},%X{spanId}] [%-5level] [%5T] [%-25logger{1}]: %message%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 20 MB
+        DefaultRollOverStrategy:
+          Delete:
+            basePath: ${log-path}
+            maxDepth: 1
+            IfFileName:
+              glob: "${sys:LOG_FILE}.*.log"
+              IfAccumulatedFileCount:
+                exceeds: 10
+  Loggers:
+    Root:
+      level: all
+      AppenderRef:
+        - ref: Console_Appender
+          level: info
+        - ref: RollingFile_Appender
+          level: info
+    Logger:
+      - name: org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener
+        level: all
+        additivity: false
+        AppenderRef:
+          - ref: Console_Appender
+            level: warn
+          - ref: RollingFile_Appender
+      - name: org.springframework.web.servlet.DispatcherServlet
+        level: warn
+        additivity: false
+        AppenderRef:
+          - ref: Console_Appender
+          - ref: RollingFile_Appender
+      - name: com.kpi.roboticshub.adapter
+        level: all
+        additivity: false
+        AppenderRef:
+          - ref: Console_Appender
+          - ref: RollingFile_Appender
+      - name: com.kpi.mars.palletizeradapter
+        level: trace
+        additivity: false
+        AppenderRef:
+          - ref: Console_Appender
+          - ref: RollingFile_Appender
+      - name: com.kpi.sol.tcpip
+        level: all
+        additivity: false
+        AppenderRef:
+          - ref: Console_Appender
+          - ref: RollingFile_Appender
+      - name: com.kpi.sol.tcpip.socket.AdapterSocket
+        level: debug
+        additivity: false
+        AppenderRef:
+          - ref: Console_Appender
+          - ref: RollingFile_Appender
+      - name: com.kpi.sol.tcpip.socket.AdapterClientSocket
+        level: debug
+        additivity: false
+        AppenderRef:
+          - ref: Console_Appender
+          - ref: RollingFile_Appender

@@ -1,0 +1,9 @@
+{
+  "messageType": "LocationStatus",
+  "messageNumber": 6039,
+  "location": {
+    "locationId": "Pallet Build A"
+  },
+  "status": "Empty",
+  "deviceId": "Palletizer 1"
+}

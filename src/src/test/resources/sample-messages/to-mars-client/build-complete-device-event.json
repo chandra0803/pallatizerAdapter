@@ -1,0 +1,17 @@
+{
+  "activityId": "A5A3EB48-1E10-4829-80CB-3B181D5339AD",
+  "activityState": "Completed",
+  "deviceId": "Palletizer 1",
+  "timestamp": "2022-06-06T20:02:40.487Z",
+  "containers": [
+    {
+      "containerId": "C000001"
+    }
+  ],
+  "destination": {
+    "locationId": "Build Location A",
+    "xCoordinate": "400.00",
+    "yCoordinate": "300.00",
+    "zCoordinate": "600.00"
+  }
+}

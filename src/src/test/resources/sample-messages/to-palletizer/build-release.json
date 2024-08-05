@@ -1,0 +1,10 @@
+{
+  "messageType": "BuildRelease",
+  "messageNumber": 6012,
+  "deviceId": "Palletizer 1",
+  "buildId": "A5A3EB48-1E10-4829-80CB-3B181D5339AD",
+  "taskId": "A5A3EB48-1E10-4829-80CB-3B181D5339AD",
+  "source": {
+    "locationId": "Pallet Build A"
+  }
+}

@@ -1,0 +1,45 @@
+##########################################################################################
+## (c) Kuecker Pulse Integration, L.P. 2022 All Rights Reserved
+## No part of this copyrighted work may be reproduced, modified, or distributed
+## in any form or by any means without the prior written permission of Kuecker Pulse 
+## Integration, L.P.
+## $Id$
+##########################################################################################
+rh-adapter:
+  activity-conversions:
+    "[Palletizer|Build]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildRequestValidator
+      converter-type: com.kpi.mars.palletizeradapter.converter.BuildRequestConverter
+    "[BryonPalletizer|Build]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildRequestValidator
+      converter-type: com.kpi.mars.palletizeradapter.converter.BuildRequestConverter
+    "[Palletizer|BuildRelease]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildReleaseValidator
+      converter-type: com.kpi.mars.palletizeradapter.converter.BuildReleaseConverter
+    "[BryonPalletizer|BuildRelease]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildReleaseValidator
+      converter-type: com.kpi.mars.palletizeradapter.converter.BuildReleaseConverter
+  device-conversions:
+    "[Palletizer|BuildComplete]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildCompleteValidator
+    "[BryonPalletizer|BuildComplete]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildCompleteValidator
+    "[Palletizer|Build]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildCompleteValidator
+    "[BryonPalletizer|Build]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildCompleteValidator
+    "[Palletizer|BuildRelease]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildReleaseCompleteValidator
+    "[BryonPalletizer|BuildRelease]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildReleaseCompleteValidator
+    "[Palletizer|BuildReleaseComplete]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildReleaseCompleteValidator
+    "[BryonPalletizer|BuildReleaseComplete]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.BuildReleaseCompleteValidator
+    "[BryonPalletizer]":
+       validator-type: com.kpi.mars.palletizeradapter.validator.LocationStatusValidator
+       converter-type: com.kpi.mars.palletizeradapter.converter.LocationStatusConverter
+  device-request-conversions:
+    "[BryonPalletizer|LocationStatusRequest]":
+      validator-type: com.kpi.mars.palletizeradapter.validator.LocationStatusRequestValidator
+      converter-type: com.kpi.mars.palletizeradapter.converter.LocationStatusRequestConverter
